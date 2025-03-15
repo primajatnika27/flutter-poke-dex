@@ -19,11 +19,19 @@ class PokemonListPage extends StatelessWidget {
             orientation == Orientation.portrait ? 1.4 : 1.6;
 
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
-            title: const Text('Pokemon List'),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: Image(
+              height: orientation == Orientation.portrait ? 40 : 30,
+              image: const AssetImage('assets/image/title.png'),
+              color: Colors.redAccent,
+            ),
             actions: [
               IconButton(
                 icon: const Icon(Icons.refresh),
+                color: Colors.black,
                 onPressed: controller.refreshList,
               ),
             ],
@@ -46,10 +54,10 @@ class PokemonListPage extends StatelessWidget {
 
             return NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scrollInfo) {
-                if (scrollInfo is ScrollEndNotification &&
-                    scrollInfo.metrics.extentAfter == 0 &&
-                    !controller.isLoading.value) {
-                  controller.fetchPokemons();
+                if (scrollInfo is ScrollEndNotification) {
+                  if (controller.shouldLoadMore(scrollInfo)) {
+                    controller.fetchPokemons();
+                  }
                 }
                 return true;
               },
@@ -67,7 +75,11 @@ class PokemonListPage extends StatelessWidget {
                   if (index >= controller.pokemons.length) {
                     if (controller.isLoading.value) {
                       return const Center(
-                        child: PokeballLoading(),
+                        child: SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: PokeballLoading(),
+                        ),
                       );
                     }
                     if (!controller.canLoadMore.value) {

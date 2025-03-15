@@ -1,3 +1,4 @@
+import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:poke_dex/config/routes.dart';
@@ -18,12 +19,19 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Pokedex',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
-        useMaterial3: true,
+        useMaterial3: false,
       ),
       getPages: AppRoutes.routes,
       initialRoute: Routes.home,
-      home: const PokemonListPage(),
+      home: FlutterSplashScreen.fadeIn(
+        backgroundColor: Colors.white,
+        childWidget: Image.asset(
+          'assets/image/splash.png',
+          fit: BoxFit.cover,
+        ),
+        duration: const Duration(seconds: 2),
+        nextScreen: const PokemonListPage(),
+      ),
     );
   }
 }

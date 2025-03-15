@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:poke_dex/common/widgets/badge_custom.dart';
+import 'package:poke_dex/common/widgets/pokeball_loading.dart';
 import 'package:poke_dex/features/pokemon/domain/entities/pokemon_entity.dart';
 
 class PokeCardWidget extends StatelessWidget {
   final PokemonEntity pokemon;
   final Function() onTapped;
-  const PokeCardWidget({super.key, required this.pokemon, required this.onTapped});
+  const PokeCardWidget(
+      {super.key, required this.pokemon, required this.onTapped});
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +34,27 @@ class PokeCardWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              right: 0,
               bottom: 10,
-              child: Image.network(
-                pokemon.imageUrl,
-                width: 70,
-                height: 70,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.error, color: Colors.white),
+              right: 10,
+              child: Hero(
+                tag: 'pokemon-image-${pokemon.id}',
+                child: Image.network(
+                  pokemon.imageUrl,
+                  width: 70,
+                  height: 70,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: PokeballLoading(),
+                      ),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.error),
+                ),
               ),
             ),
             Padding(

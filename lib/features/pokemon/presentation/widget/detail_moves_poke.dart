@@ -67,18 +67,17 @@ class DetailMovesPoke extends GetView<PokemonDetailController> {
               ),
             ),
             const SizedBox(height: 16),
-            Expanded(
-              child: ListView.separated(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemCount: controller.pokemonMoves.length,
-                separatorBuilder: (context, index) =>
-                const SizedBox(height: 12),
-                itemBuilder: (context, index) {
-                  final move = controller.pokemonMoves[index];
-                  return _buildMoveCard(move);
-                },
-              ),
+            ListView.separated(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: controller.pokemonMoves.length,
+              separatorBuilder: (context, index) =>
+              const SizedBox(height: 12),
+              itemBuilder: (context, index) {
+                final move = controller.pokemonMoves[index];
+                return _buildMoveCard(move);
+              },
             ),
           ],
         );

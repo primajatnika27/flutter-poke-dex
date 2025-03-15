@@ -18,7 +18,7 @@ class DetailBaseStatsPoke extends GetView<PokemonDetailController> {
       child: Row(
         children: [
           SizedBox(
-            width: 100,
+            width: 70,
             child: Text(
               label,
               style: const TextStyle(

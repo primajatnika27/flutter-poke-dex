@@ -5,6 +5,7 @@ import 'package:poke_dex/common/utils/pokemon_generator.dart';
 import 'package:poke_dex/core/error/failures.dart';
 import 'package:poke_dex/features/pokemon/data/datasources/pokemon_remote_data_source.dart';
 import 'package:poke_dex/features/pokemon/data/models/mapper/pokemon_move_mapper.dart';
+import 'package:poke_dex/features/pokemon/data/models/pokemon_detail_model.dart';
 import 'package:poke_dex/features/pokemon/domain/entities/pokemon_detail_about_entity.dart';
 import 'package:poke_dex/features/pokemon/domain/entities/pokemon_detail_stats_entity.dart';
 import 'package:poke_dex/features/pokemon/domain/entities/pokemon_entity.dart';
@@ -27,23 +28,27 @@ class PokemonRepositoryImpl implements PokemonRepository {
         limit: limit,
         offset: offset,
       );
-      final List<PokemonEntity> pokemonList = [];
 
-      for (var pokemon in pokemonListResponse.results) {
-        final pokemonDetail =
-            await remoteDataSource.getPokemonDetail(pokemon.url);
+      final List<Future<PokemonDetail>> detailFutures = pokemonListResponse
+          .results
+          .map((pokemon) => remoteDataSource.getPokemonDetail(pokemon.url))
+          .toList();
 
-        pokemonList.add(
-          PokemonEntity(
-            id: pokemonDetail.id,
-            name: pokemonDetail.name,
-            imageUrl: pokemonDetail.sprites.other.officialArtwork.frontDefault,
-            color: PokemonColors.instance
-                .getTypeColor(pokemonDetail.types.first.type.name),
-            types: pokemonDetail.types.map((type) => type.type.name).toList(),
-          ),
-        );
-      }
+      final List<PokemonDetail> pokemonDetails =
+          await Future.wait(detailFutures);
+
+      final List<PokemonEntity> pokemonList = pokemonDetails
+          .map(
+            (detail) => PokemonEntity(
+              id: detail.id,
+              name: detail.name,
+              imageUrl: detail.sprites.other.officialArtwork.frontDefault,
+              color: PokemonColors.instance
+                  .getTypeColor(detail.types.first.type.name),
+              types: detail.types.map((type) => type.type.name).toList(),
+            ),
+          )
+          .toList();
 
       return Right(pokemonList);
     } on DioException catch (e) {
