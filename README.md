@@ -117,3 +117,13 @@ test/
 └── test_helpers/
     └── test_di.dart  # Helper untuk dependency injection dalam testing
 ```
+## Screenshoot
+![WhatsApp Image 2025-03-15 at 8 16 40 PM](https://github.com/user-attachments/assets/a7a8e113-bf78-43da-bb8f-f6225f9058ff)
+![WhatsApp Image 2025-03-15 at 8 16 40 PM (1)](https://github.com/user-attachments/assets/1ae85f04-2964-477e-bcac-377d9855ba18)
+![WhatsApp Image 2025-03-15 at 8 16 41 PM](https://github.com/user-attachments/assets/04af5d22-bb4b-4354-a7cd-b63b02ac2a33)
+![WhatsApp Image 2025-03-15 at 8 16 41 PM (1)](https://github.com/user-attachments/assets/83800a9f-63e6-460d-95e2-bd8b090eecfa)
+![WhatsApp Image 2025-03-15 at 8 16 41 PM (2)](https://github.com/user-attachments/assets/3b154b83-d0f6-46fa-a856-a6ac4de282c9)
+![WhatsApp Image 2025-03-15 at 8 16 42 PM](https://github.com/user-attachments/assets/7c164a11-f588-4e6f-80c2-95f04474aa11)
+![WhatsApp Image 2025-03-15 at 8 16 42 PM (1)](https://github.com/user-attachments/assets/e60546db-ef16-4edc-b1a3-88d31400f1ea)
+![WhatsApp Image 2025-03-15 at 8 16 42 PM (2)](https://github.com/user-attachments/assets/66c42f67-140b-419d-a235-c9872616105c)
+
