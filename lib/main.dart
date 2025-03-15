@@ -24,10 +24,10 @@ class MyApp extends StatelessWidget {
       getPages: AppRoutes.routes,
       initialRoute: Routes.home,
       home: FlutterSplashScreen.fadeIn(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
         childWidget: Image.asset(
           'assets/image/splash.png',
-          fit: BoxFit.cover,
+          fit: BoxFit.fitWidth,
         ),
         duration: const Duration(seconds: 2),
         nextScreen: const PokemonListPage(),

@@ -34,8 +34,20 @@ class PokemonDetailPage extends StatelessWidget {
   Widget _buildTab(String title, int index) {
     return Obx(() {
       final isSelected = controller.selectedTabIndex == index;
-      return GestureDetector(
-        onTap: () => controller.changeTab(index),
+      return OutlinedButton(
+        onPressed: () => controller.changeTab(index),
+        style: ButtonStyle(
+          side: MaterialStateProperty.all(BorderSide.none),
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+          shadowColor: MaterialStateProperty.all(Colors.transparent),
+          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide.none,
+            ),
+          ),
+        ),
         child: Text(
           title,
           style: TextStyle(
@@ -50,8 +62,7 @@ class PokemonDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape =
-        Get.mediaQuery.orientation == Orientation.landscape;
+    final isLandscape = Get.mediaQuery.orientation == Orientation.landscape;
 
     return Scaffold(
       body: Stack(
