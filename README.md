@@ -11,7 +11,6 @@ Aplikasi Pokédex mobile yang dibangun dengan Flutter, menggunakan Clean Archite
   - Evolusi
   - Daftar gerakan (moves)
 - UI yang responsif dan menarik
-- Pencarian Pokémon
 
 ## Teknologi & Arsitektur
 
