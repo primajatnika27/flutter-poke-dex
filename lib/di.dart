@@ -5,7 +5,10 @@ import 'package:poke_dex/features/pokemon/data/datasources/pokemon_remote_data_s
 import 'package:poke_dex/features/pokemon/data/datasources/pokemon_remote_data_source_impl.dart';
 import 'package:poke_dex/features/pokemon/data/repositories/pokemon_repository_impl.dart';
 import 'package:poke_dex/features/pokemon/domain/repositories/pokemon_repository.dart';
+import 'package:poke_dex/features/pokemon/domain/usecases/get_pokemon_detail_usecase.dart';
+import 'package:poke_dex/features/pokemon/domain/usecases/get_pokemon_evolution_chain.dart';
 import 'package:poke_dex/features/pokemon/domain/usecases/get_pokemon_list_usecase.dart';
+import 'package:poke_dex/features/pokemon/domain/usecases/get_pokemon_move_usecase.dart';
 
 final getIt = GetIt.instance;
 
@@ -28,5 +31,14 @@ Future<void> initializeDependencies() async {
   // Use Cases
   getIt.registerLazySingleton(
     () => GetPokemonListUseCase(getIt<PokemonRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => GetPokemonAboutUseCase(getIt<PokemonRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => GetPokemonEvolutionChainUseCase(getIt<PokemonRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => GetPokemonMoveUseCase(getIt<PokemonRepository>()),
   );
 }

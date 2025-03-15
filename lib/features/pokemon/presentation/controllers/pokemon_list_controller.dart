@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import '../../../../di.dart';
-import '../../domain/entities/pokemon_entity.dart';
-import '../../domain/usecases/get_pokemon_list_usecase.dart';
+import 'package:poke_dex/di.dart';
+import 'package:poke_dex/features/pokemon/domain/entities/pokemon_entity.dart';
+import 'package:poke_dex/features/pokemon/domain/usecases/get_pokemon_list_usecase.dart';
 
 class PokemonListController extends GetxController {
   final _getPokemonListUseCase = getIt<GetPokemonListUseCase>();

@@ -1,6 +1,10 @@
-import 'package:dio/dio.dart';
-import '../../../../common/network/dio_client.dart';
-import '../models/pokemon_model.dart';
+import 'package:poke_dex/common/network/dio_client.dart';
+import 'package:poke_dex/core/error/failures.dart';
+import 'package:poke_dex/features/pokemon/data/models/pokemon_detail_model.dart';
+import 'package:poke_dex/features/pokemon/data/models/pokemon_evolution_chain_model.dart';
+import 'package:poke_dex/features/pokemon/data/models/pokemon_model.dart';
+import 'package:poke_dex/features/pokemon/data/models/pokemon_move_model.dart';
+import 'package:poke_dex/features/pokemon/data/models/pokemon_species.dart';
 import 'pokemon_remote_data_source.dart';
 
 class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
@@ -24,10 +28,43 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
   }
 
   @override
-  Future<PokemonDetailResponse> getPokemonDetail(String url) async {
-    // Extract the ID from the full URL
+  Future<PokemonDetail> getPokemonDetail(String url) async {
     final pokemonId = url.split('/').where((e) => e.isNotEmpty).last;
     final response = await dioClient.get('pokemon/$pokemonId');
-    return PokemonDetailResponse.fromJson(response.data);
+    return PokemonDetail.fromJson(response.data);
+  }
+
+  @override
+  Future<PokemonSpecies> getPokemonSpecies(String url) async {
+    final pokemonId = url.split('/').where((e) => e.isNotEmpty).last;
+    final response = await dioClient.get('pokemon-species/$pokemonId');
+    return PokemonSpecies.fromJson(response.data);
+  }
+
+  @override
+  Future<PokemonEvolutionChain> getPokemonEvolutionChain(String url) async {
+    final pokemonId = url.split('/').where((e) => e.isNotEmpty).last;
+    final response = await dioClient.get('evolution-chain/$pokemonId');
+    return PokemonEvolutionChain.fromJson(response.data);
+  }
+
+  @override
+  Future<List<PokemonMove>> getPokemonMove(int id) async {
+    try {
+      final response = await dioClient.get('pokemon/$id');
+      final List<dynamic> movesList = response.data['moves'];
+
+      List<PokemonMove> moves = [];
+      for (int i = 0; i < 5; i++) {
+        final moveUrl = movesList[i]['move']['url'];
+        final moveResponse = await dioClient.get(moveUrl);
+
+        moves.add(PokemonMove.fromJson(moveResponse.data));
+      }
+
+      return moves;
+    } catch (e) {
+      throw ServerFailure(e.toString());
+    }
   }
 }
